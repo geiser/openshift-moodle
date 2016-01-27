@@ -11,7 +11,7 @@ Create an account at https://www.openshift.com and install the client tools (run
 Create a php-5.4 application (you can call your application whatever you want)
 
 
-	rhc app-create your_app_name php-5.4 postgresql-9.2 cron --namespace your_namespace ---from-code=https://github.com/HaakonME/openshift-moodle-example.git -l your@email.address -p your_account_password
+	rhc app-create your_app_name php-5.4 postgresql-9.2 cron --namespace your_namespace --from-code=https://github.com/HaakonME/openshift-moodle-example.git -l your@email.address -p your_account_password
 
 That's it, you can now checkout your application at:
 
