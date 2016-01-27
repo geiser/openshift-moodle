@@ -7,10 +7,10 @@
 
 # To update the version shipped in this quickstart, bump this variable:
 #
-install_version="3.0.2+"
-upstream_version=30
+install_version="2.9.1+"
+upstream_version=29
 
-# Download and install Moodle
+# Download and install WordPress
 
 install_dir=${OPENSHIFT_BUILD_DEPENDENCIES_DIR}${install_version}
 
@@ -18,7 +18,7 @@ install_dir=${OPENSHIFT_BUILD_DEPENDENCIES_DIR}${install_version}
 current_version_dir=${OPENSHIFT_DATA_DIR}current
 
 #
-# If Moodle is already installed in the current gear, there
+# If WordPress is already installed in the current gear, there
 # is nothing to build :-)
 #
 [ -d "${current_version_dir}" ] && exit 0

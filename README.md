@@ -15,7 +15,7 @@ That's it, you can now checkout your application at:
 
     http://moodle-$yournamespace.rhcloud.com
 
-You'll be prompted to set an admin password and name your WordPress site the first time you visit this
+You'll be prompted to set an admin password and name your Moodle site the first time you visit this
 page.
 
 Notes

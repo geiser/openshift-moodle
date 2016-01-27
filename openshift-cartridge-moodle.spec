@@ -1,5 +1,5 @@
 Name:		openshift-origin-cartridge-moodle
-Version:	2.9.1
+Version:	3.0.2
 Release:	1%{?dist}
 Summary:	Provides Moodle cartridge to OpenShift. (Cartridge Format V2)
 
