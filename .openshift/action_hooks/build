@@ -7,7 +7,7 @@
 
 # To update the version shipped in this quickstart, bump this variable:
 #
-install_version="3.0.2+"
+install_version="3.0.3+"
 upstream_version=30
 
 # Download and install Moodle
