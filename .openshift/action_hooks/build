@@ -5,33 +5,34 @@
 # could be python, php, ruby, etc.
 #!/bin/bash
 
-# To update the version shipped in this quickstart, bump this variable:
-#
-install_version="3.1+"
-upstream_version=31
+# To update the branch shipped in this quickstart, bump this variable:
+
+upstream_branch="stoa29"
+repo="https://git.uspdigital.usp.br/6655440/moodle/repository/archive.tar.gz?ref="${upstream_branch}
 
 # Download and install Moodle
 
-install_dir=${OPENSHIFT_BUILD_DEPENDENCIES_DIR}${install_version}
+install_dir=${OPENSHIFT_BUILD_DEPENDENCIES_DIR}${upstream_branch}
 
 # Used in this script only
 current_version_dir=${OPENSHIFT_DATA_DIR}current
 
-#
-# If Moodle is already installed in the current gear, there
-# is nothing to build :-)
-#
-[ -d "${current_version_dir}" ] && exit 0
+# If Moodle is already installed in the current gear,
+# delete & previous code to build :-)
 
-mkdir -p $install_dir
+[ -d "${current_version_dir}" ] && rm -rf ${current_version_dir}
+[ -d "${install_dir}" ] && rm -rf ${install_dir}
+mkdir -p ${install_dir}
 
 pushd ${install_dir} >/dev/null
-curl -o moodle-latest-${upstream_version}.tgz -kLs https://download.moodle.org/download.php/direct/stable${upstream_version}/moodle-latest-${upstream_version}.tgz
 
-# Install Moodle
-#
-tar --strip-components=1 -xzf moodle-latest-${upstream_version}.tgz
-rm -rf moodle-latest-${upstream_version}.tgz
-echo $install_version > ${OPENSHIFT_BUILD_DEPENDENCIES_DIR}.current_version
+# Download & unpack Moodle 
+
+curl -o moodle-${upstream_branch}.tgz -kLs ${repo}
+tar --strip-components=1 -xzf moodle-${upstream_branch}.tgz
+rm -rf moodle-${upstream_branch}.tgz
+echo $upstream_branch > ${OPENSHIFT_BUILD_DEPENDENCIES_DIR}.current_branch
+
+# Download & unpack other Packages
 
 popd >/dev/null

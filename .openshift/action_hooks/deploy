@@ -6,8 +6,8 @@
 
 dest_dir=${OPENSHIFT_DATA_DIR}current
 
-current_version=$(cat ${OPENSHIFT_BUILD_DEPENDENCIES_DIR}.current_version)
-install_dir=${OPENSHIFT_BUILD_DEPENDENCIES_DIR}${current_version}
+current_branch=$(cat ${OPENSHIFT_BUILD_DEPENDENCIES_DIR}.current_branch)
+install_dir=${OPENSHIFT_BUILD_DEPENDENCIES_DIR}${current_branch}
 hooks_dir="${HOME}$(dirname $0)"
 
 if [ ! -d "${dest_dir}" ]; then
@@ -15,8 +15,8 @@ if [ ! -d "${dest_dir}" ]; then
   cp -rf ${install_dir}/* ${dest_dir}/
 fi
 
-# Replace the php/ directory with provided clean Moodle installation
-#
+# Replace the php/ directory with provided Moodle installation
+
 if [ -d ${OPENSHIFT_REPO_DIR}php ]; then
   rm -rf ${OPENSHIFT_REPO_DIR}php
 fi
