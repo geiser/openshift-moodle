@@ -29,9 +29,9 @@ pushd ${install_dir} >/dev/null
 # Download & unpack Moodle 
 
 curl -o moodle-${upstream_branch}.tar.gz -kLs ${repo}
-tar --strip-components=1 -zxvf moodle-${upstream_branch}.tar.gz
-rm -rf moodle-${upstream_branch}.tar.gz
-echo $upstream_branch > ${OPENSHIFT_BUILD_DEPENDENCIES_DIR}.current_branch
+#tar --strip-components=1 -zxvf moodle-${upstream_branch}.tar.gz
+#rm -rf moodle-${upstream_branch}.tar.gz
+#echo $upstream_branch > ${OPENSHIFT_BUILD_DEPENDENCIES_DIR}.current_branch
 
 # Download & unpack other Packages
 
