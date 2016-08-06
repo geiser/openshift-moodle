@@ -1,15 +1,15 @@
-Name:		openshift-origin-cartridge-moodle
-Version:	3.1
+Name:		openshift-origin-cartridge-moodle-usp
+Version:	stoa29
 Release:	1%{?dist}
 Summary:	Provides Moodle cartridge to OpenShift. (Cartridge Format V2)
 
 Group:		Development/Languages
 License:	GPLv3
 URL:		https://moodle.org
-Source0:	openshift-origin-cartridge-moodle.tar.gz
+Source0:	openshift-origin-cartridge-moodle-usp.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-Requires:	openshift-origin-node-util
+Requires:   openshift-origin-node-util
 Requires:   php54
 Requires:   php54-php-gd
 Requires:   php54-php-mbstring

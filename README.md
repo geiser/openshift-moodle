@@ -1,9 +1,14 @@
-Moodle on OpenShift
-===================
+Moodle Stoa on OpenShift
+========================
 
-This git repository helps you get up and running quickly w/ a Moodle installation on OpenShift.  
+This git repository helps you get up and running a version of Moodle
+developed by the USP such as Moodle Stoa (http://disciplinas.stoa.usp.br)
+on OpenShift. This application does not use the original version developed by
+the group atp.usp.br, it optains the source code from the repository
+https://git.uspdigital.usp.br/6655440/moodle with a set of new features and
+plugins developed by the CAED group (http://caed-lab.com). 
 
-Running Moodle 3.1 on OpenShift
+Running Moodle Stoa on OpenShift
 ----------------------------
 
 Create an account at https://www.openshift.com and install the client tools (run 'rhc setup' first)
@@ -11,17 +16,17 @@ Create an account at https://www.openshift.com and install the client tools (run
 Create a php-5.4 application (you can call your application whatever you want)
 
 
-	rhc app-create your_app_name php-5.4 postgresql-9.2 cron --namespace your_namespace --from-code=https://github.com/HaakonME/openshift-moodle-example.git -l your@email.address -p your_account_password
+	rhc app-create your_app_name php-5.4 mysql-5.5 --from-code=https://github.com/geiser/openshift-moodle.git -l your@email.address -p your_account_password
 
 That's it, you can now checkout your application at:
 
 	http://your_app_name-$your_namespace.rhcloud.com
 
-You'll be prompted to set an admin password and name your Moodle site the first time you visit this
-page.
 
 Notes
 =====
+The default branch use is stoa29 (Moodle Stoa). You can change the branch in the
+file: GIT_ROOT/.openshift/action_hooks/deploy
 
 GIT_ROOT/.openshift/action_hooks/deploy:
     This script is executed with every 'git push'.  Feel free to modify this script
@@ -32,3 +37,4 @@ GIT_ROOT/.openshift/action_hooks/deploy:
     GIT_ROOT/.openshift/action_hooks/alter.sql and then use
     GIT_ROOT/.openshift/action_hooks/deploy to execute that script (make sure to
     back up your application + database w/ 'rhc app snapshot save' first :) )
+
