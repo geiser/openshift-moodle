@@ -10,9 +10,29 @@ current_branch=$(cat ${OPENSHIFT_BUILD_DEPENDENCIES_DIR}.current_branch)
 install_dir=${OPENSHIFT_BUILD_DEPENDENCIES_DIR}${current_branch}
 hooks_dir="${HOME}$(dirname $0)"
 
+mdl_wwwroot="http://${OPENSHIFT_APP_DNS}"
+mdl_dataroot=${OPENSHIFT_DATA_DIR}moodledata
+
+# To change the database, bump this variable:
+
+mdl_dbtype=mysqli
+mdl_dbname=${OPENSHIFT_APP_NAME}
+mdl_dbuser=${OPENSHIFT_MYSQL_DB_USERNAME}
+mdl_dbpass=${OPENSHIFT_MYSQL_DB_PASSWORD}
+mdl_dbport=${OPENSHIFT_MYSQL_DB_PORT}
+mdl_dbhost=${OPENSHIFT_MYSQL_DB_HOST}
+mdl_dbadminuser=${OPENSHIFT_MYSQL_DB_USERNAME}
+mdl_dbadminpass=${OPENSHIFT_MYSQL_DB_PASSWORD}
+
+mdl_fullname="Moodle for testing" # ${OPENSHIFT_APP_NAME}
+mdl_shortname="Moodle for testing" # ${OPENSHIFT_APP_NAME}
+
+# Create directory to mdl_data & move code to destination 
+[ ! -d ${mdl_dataroot} ] && mkdir -p ${mdl_dataroot}
+
 if [ ! -d "${dest_dir}" ]; then
   mkdir -p $dest_dir
-  cp -rf ${install_dir}/* ${dest_dir}/
+  mv -f ${install_dir}/* ${dest_dir}/ # cp -rf ${install_dir}/* ${dest_dir}/
 fi
 
 # Replace the php/ directory with provided Moodle installation
@@ -22,13 +42,14 @@ if [ -d ${OPENSHIFT_REPO_DIR}php ]; then
 fi
 ln -sf ${dest_dir} ${OPENSHIFT_REPO_DIR}php
 
-pushd ${install_dir} >/dev/null
+# Install moodle & copy config.php
 
-if ! [ -f ${OPENSHIFT_DATA_DIR}/current/config.php ] ; then 
-    pushd ${OPENSHIFT_DATA_DIR}/current >/dev/null
-    nohup php admin/cli/install.php --lang=en --wwwroot="https://${OPENSHIFT_APP_DNS}" --dataroot=${OPENSHIFT_DATA_DIR} --dbtype=pgsql --dbname=${OPENSHIFT_APP_NAME} --dbuser=${OPENSHIFT_POSTGRESQL_DB_USERNAME} --dbpass=${OPENSHIFT_POSTGRESQL_DB_PASSWORD} --dbport=${OPENSHIFT_POSTGRESQL_DB_PORT} --dbhost=${OPENSHIFT_POSTGRESQL_DB_HOST} --fullname=${OPENSHIFT_APP_NAME} --shortname=${OPENSHIFT_APP_NAME} --adminuser=${OPENSHIFT_POSTGRESQL_DB_USERNAME} --adminpass=${OPENSHIFT_POSTGRESQL_DB_PASSWORD} --agree-license --non-interactive &
+if ! [ -f ${OPENSHIFT_DATA_DIR}config.php ] ; then
+    pushd ${dest_dir} >/dev/null
+    nohup php admin/cli/install.php --lang=en --wwwroot="${mdl_wwwroot}" --dataroot=${mdl_dataroot} --dbtype=${mdl_dbtype} --dbname=${mdl_dbname} --dbuser=${mdl_dbuser} --dbpass=${mdl_dbpass} --dbport=${mdl_dbport} --dbhost=${mdl_dbhost} --fullname="${mdl_fullname}" --shortname="${mdl_shortname}" --adminuser=${mdl_dbadminuser} --adminpass=${mdl_dbadminpass} --agree-license --non-interactive
     popd >/dev/null
+    cp ${dest_dir}config.php ${OPENSHIFT_DATA_DIR}
+else
+    cp -f ${OPENSHIFT_DATA_DIR}config.php ${dest_dir}
 fi
-
-popd >/dev/null
 
