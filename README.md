@@ -15,8 +15,11 @@ Create an account at https://www.openshift.com and install the client tools (run
 
 Create a php-5.4 application (you can call your application whatever you want)
 
-
-	rhc app-create your_app_name php-5.4 mysql-5.5 --from-code=https://github.com/geiser/openshift-moodle.git -l your@email.address -p your_account_password
+        rhc app-create your_app_name php-5.4 mysql-5.5
+        cd your_app_name
+	git remote add github -f https://github.com/geiser/openshift-moodle.git
+        git merge github/master -s recursive
+        git push origin master
 
 That's it, you can now checkout your application at:
 
