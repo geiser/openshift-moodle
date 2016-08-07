@@ -28,28 +28,28 @@ mdl_fullname="Moodle for testing" # ${OPENSHIFT_APP_NAME}
 mdl_shortname="Moodle for testing" # ${OPENSHIFT_APP_NAME}
 
 # Create directory to mdl_data & move code to destination 
-#[ ! -d ${mdl_dataroot} ] && mkdir -p ${mdl_dataroot}
+[ ! -d ${mdl_dataroot} ] && mkdir -p ${mdl_dataroot}
 
-#if [ ! -d "${dest_dir}" ]; then
-#  mkdir -p $dest_dir
-#  mv -f ${install_dir}/* ${dest_dir}/ # cp -rf ${install_dir}/* ${dest_dir}/
-#fi
+if [ ! -d "${dest_dir}" ]; then
+  mkdir -p $dest_dir
+  mv -f ${install_dir}/* ${dest_dir}/ # cp -rf ${install_dir}/* ${dest_dir}/
+fi
 
 # Replace the php/ directory with provided Moodle installation
 
-#if [ -d ${OPENSHIFT_REPO_DIR}php ]; then
-#  rm -rf ${OPENSHIFT_REPO_DIR}php
-#fi
-#ln -sf ${dest_dir} ${OPENSHIFT_REPO_DIR}php
+if [ -d ${OPENSHIFT_REPO_DIR}php ]; then
+  rm -rf ${OPENSHIFT_REPO_DIR}php
+fi
+ln -sf ${dest_dir} ${OPENSHIFT_REPO_DIR}php
 
 # Install moodle & copy config.php
 
-#if ! [ -f ${OPENSHIFT_DATA_DIR}config.php ] ; then
-#    pushd ${dest_dir} >/dev/null
-#    nohup php admin/cli/install.php --lang=en --wwwroot="${mdl_wwwroot}" --dataroot=${mdl_dataroot} --dbtype=${mdl_dbtype} --dbname=${mdl_dbname} --dbuser=${mdl_dbuser} --dbpass=${mdl_dbpass} --dbport=${mdl_dbport} --dbhost=${mdl_dbhost} --fullname="${mdl_fullname}" --shortname="${mdl_shortname}" --adminuser=${mdl_dbadminuser} --adminpass=${mdl_dbadminpass} --agree-license --non-interactive
-#    popd >/dev/null
-#    cp ${dest_dir}config.php ${OPENSHIFT_DATA_DIR}
-#else
-#    cp -f ${OPENSHIFT_DATA_DIR}config.php ${dest_dir}
-#fi
+if ! [ -f ${OPENSHIFT_DATA_DIR}config.php ] ; then
+    pushd ${dest_dir} >/dev/null
+    nohup php admin/cli/install.php --lang=en --wwwroot="${mdl_wwwroot}" --dataroot=${mdl_dataroot} --dbtype=${mdl_dbtype} --dbname=${mdl_dbname} --dbuser=${mdl_dbuser} --dbpass=${mdl_dbpass} --dbport=${mdl_dbport} --dbhost=${mdl_dbhost} --fullname="${mdl_fullname}" --shortname="${mdl_shortname}" --adminuser=${mdl_dbadminuser} --adminpass=${mdl_dbadminpass} --agree-license --non-interactive
+    popd >/dev/null
+    cp ${dest_dir}config.php ${OPENSHIFT_DATA_DIR}
+else
+    cp -f ${OPENSHIFT_DATA_DIR}config.php ${dest_dir}
+fi
 
